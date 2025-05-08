@@ -135,9 +135,38 @@ class _TodoPageState extends State<TodoPage> {
                               color: Colors.blue[50],
                               borderRadius: BorderRadius.circular(8.0)
                             ),
+
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          todo.title,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+
+                                        SizedBox(height: 24),
+                                        Text(
+                                          '${todo.date.day}/${todo.date.month}/${todo.date.year}',
+                                          style: TextStyle(color: Colors.grey),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           );
                         },
-                      )
+                      );
                     }
                   } 
                 ),
