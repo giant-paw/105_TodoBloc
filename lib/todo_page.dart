@@ -66,6 +66,23 @@ class _TodoPageState extends State<TodoPage> {
                   ),
                 ],
               ),
+
+              Form(
+                key: _key,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          labelText: 'Todo',
+                          border: OutlineInputBorder(),
+                        ),
+                      )
+                    )
+                  ],
+                )
+              )
             ],
           ),
         ),
