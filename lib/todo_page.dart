@@ -66,19 +66,26 @@ class _TodoPageState extends State<TodoPage> {
                   ),
                 ],
               ),
-
+              
+              SizedBox(height: 20),
               Form(
                 key: _key,
                 child: Row(
                   children: [
                     Expanded(
-                      child: TextField(
+                      child: TextFormField(
                         controller: _controller,
                         decoration: InputDecoration(
                           labelText: 'Todo',
                           border: OutlineInputBorder(),
                         ),
-                      )
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Masukan data todo';
+                          }
+                          return null;
+                        },
+                      ),
                     )
                   ],
                 )
