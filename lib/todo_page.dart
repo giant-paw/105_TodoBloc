@@ -2,19 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:tugas_bloc/bloc/todo_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TodoPage extends StatefulWidget {
+class TodoPage extends StatelessWidget {
   const TodoPage({super.key});
 
   @override
-  State<TodoPage> createState() => _TodoPageState();
-}
-
-class _TodoPageState extends State<TodoPage> {
-  @override
-  final _key = GlobalKey<FormState>();
-  final _controller = TextEditingController();
 
   Widget build(BuildContext context) {
+  final _key = GlobalKey<FormState>();
+  final _controller = TextEditingController();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -29,7 +24,7 @@ class _TodoPageState extends State<TodoPage> {
                     children: [
                       Text('Pilih Tanggal'),
 
-                      BlocBuilder<TodoBloc, TodoState>(
+                      BlocBuilder<TodoBloc, TodoState>( 
                         builder: (context, state) {
                           if (state is TodoLoaded) {
                             if (state.selectDate != null) {
@@ -114,7 +109,7 @@ class _TodoPageState extends State<TodoPage> {
 
               SizedBox(height: 16.0),
               Expanded(
-                child: BlocBuilder(
+                child: BlocBuilder<TodoBloc, TodoState>(
                   builder: (context, state) {
                     if(state is TodoLoading) {
                       return Center(child: CircularProgressIndicator(),);
@@ -157,8 +152,30 @@ class _TodoPageState extends State<TodoPage> {
                                         Text(
                                           '${todo.date.day}/${todo.date.month}/${todo.date.year}',
                                           style: TextStyle(color: Colors.grey),
+                                        ),
+
+                                        SizedBox(height: 4.0),
+                                        Text(
+                                          todo.isComplete
+                                            ? 'completed'
+                                            : 'Not Completed',
+                                          style: TextStyle(
+                                            color:
+                                              todo.isComplete
+                                                ? Colors.green
+                                                : Colors.red,
+                                          ),
                                         )
                                       ],
+                                    ),
+
+                                    Checkbox(
+                                      value: todo.isComplete, 
+                                      onChanged: (value) {
+                                        context.read<TodoBloc>().add(
+                                          TodoEventComplete(index: index),
+                                        );
+                                      } 
                                     )
                                   ],
                                 )
@@ -167,6 +184,8 @@ class _TodoPageState extends State<TodoPage> {
                           );
                         },
                       );
+                    } else {
+                      return Center(child: Text('Tida Ada Daftar TODO'));
                     }
                   } 
                 ),
