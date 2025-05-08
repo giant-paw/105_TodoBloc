@@ -86,7 +86,28 @@ class _TodoPageState extends State<TodoPage> {
                           return null;
                         },
                       ),
-                    )
+                    ),
+
+                    SizedBox(width: 10),
+                    FilledButton(
+                      onPressed: () {
+                        if(_key.currentState!.validate()){
+                          final selectDate = context.read<TodoBloc>().state;
+
+                          if(selectDate is TodoLoaded) {
+                            context.read<TodoBloc>().add(
+                              TodoEventAdd(
+                                title: _controller.text, 
+                                date: selectDate.selectDate!
+                              )
+                            );
+                            _controller.clear();
+                            selectDate.selectDate = null;
+                          }
+                        }
+                      }, 
+                      child: Text('Tambah')
+                      )
                   ],
                 )
               )
